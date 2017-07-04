@@ -5,6 +5,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
+use yii\web\IdentityInterface;
 
 /**
  * User model
@@ -26,6 +27,7 @@ use yii\db\Expression;
 class User extends ActiveRecord
 {
     use \common\traits\AuthenticationModelTrait;
+    use \common\traits\AfterSaveRefreshModelTrait;
     
     const STATUS_DELETED    = 'deleted';
     const STATUS_SUSPENDED  = 'suspended';
@@ -52,15 +54,13 @@ class User extends ActiveRecord
         ];
     }
     
-    /**
-     * After saving refresh model to get rid of 'Expression Now()` y datetime fields
-     * {@inheritDoc}
-     * @see \yii\db\BaseActiveRecord::afterSave()
-     */
-    public function afterSave($insert, $changedAttributes)
+    public function beforeValidate()
     {
-        parent::afterSave($insert, $changedAttributes);
-        $this->refresh();
+        if ($this->isNewRecord) {
+            $this->generateAuthKey();
+            $this->setPassword($this->password);
+        }
+        return parent::beforeValidate();
     }
 
     /**
@@ -131,142 +131,6 @@ class User extends ActiveRecord
      * ------------------------------------------------------------------------------------------ */
     
     // Add relations with other models here
-    
-    /* ---------------------------------------------------------------------------------------------
-     * Identity methods
-     * ------------------------------------------------------------------------------------------ */
-
-    /**
-     * @inheritdoc
-     */
-    public static function findIdentity($id)
-    {
-        return static::findOne([
-            'id' => $id,
-            'status' => static::STATUS_ACTIVE
-        ]);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not supported.');
-    }
-
-    /**
-     * Finds user by password reset token
-     *
-     * @param string $token password reset token
-     * @return static|null
-     */
-    public static function findByPasswordResetToken($token)
-    {
-        if (!static::isPasswordResetTokenValid($token)) {
-            return null;
-        }
-
-        return static::findOne([
-            'password_reset_token' => $token,
-            'status' => static::STATUS_ACTIVE,
-        ]);
-    }
-
-    /**
-     * Finds out if password reset token is valid
-     *
-     * @param string $token password reset token
-     * @return bool
-     */
-    public static function isPasswordResetTokenValid($token)
-    {
-        if (empty($token)) {
-            return false;
-        }
-
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
-        $expire = Yii::$app->params['user.passwordResetTokenExpire'];
-        return $timestamp + $expire >= time();
-    }
-    
-    /**
-     * Finds user by account confirmation token
-     *
-     * @param string $token password reset token
-     * @return static|null
-     */
-    public static function findByAccountConfirmToken($token)
-    {
-        return static::findOne([
-            'account_confirm_token' => $token,
-            'status' => self::STATUS_ACTIVE,
-        ]);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getId()
-    {
-        return $this->getPrimaryKey();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getAuthKey()
-    {
-        return $this->auth_key;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function validateAuthKey($authKey)
-    {
-        return $this->getAuthKey() === $authKey;
-    }
-
-    /**
-     * Generates "remember me" authentication key
-     */
-    public function generateAuthKey()
-    {
-        $this->auth_key = Yii::$app->security->generateRandomString();
-    }
-
-    /**
-     * Generates new password reset token
-     */
-    public function generatePasswordResetToken()
-    {
-        $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
-    }
-
-    /**
-     * Removes password reset token
-     */
-    public function removePasswordResetToken()
-    {
-        $this->password_reset_token = null;
-    }
-    
-    /**
-     * Generates new account confirmation token
-     */
-    public function generateAccountConfirmToken()
-    {
-        $this->account_confirm_token = Yii::$app->security->generateRandomString();
-    }
-    
-    /**
-     * Removes account confirmation token
-     */
-    public function removeAccountConfirmToken()
-    {
-        $this->account_confirm_token = null;
-    }
     
     /* ------------------------------------------------------------------------
      * Utilities

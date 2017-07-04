@@ -14,7 +14,7 @@ use yii\db\Expression;
  * @property string $password_reset_token
  * @property string $account_confirm_token
  * @property string $status
- * @property string $adminname
+ * @property string $username
  * @property string $email
  * @property string $password_hash
  * @property string $created_at
@@ -26,6 +26,7 @@ use yii\db\Expression;
 class Admin extends ActiveRecord
 {
     use \common\traits\AuthenticationModelTrait;
+    use \common\traits\AfterSaveRefreshModelTrait;
     
     const STATUS_DELETED    = 'deleted';
     const STATUS_SUSPENDED  = 'suspended';
@@ -51,17 +52,6 @@ class Admin extends ActiveRecord
             ]
         ];
     }
-    
-    /**
-     * After saving refresh model to get rid of 'Expression Now()` y datetime fields
-     * {@inheritDoc}
-     * @see \yii\db\BaseActiveRecord::afterSave()
-     */
-    public function afterSave($insert, $changedAttributes)
-    {
-        parent::afterSave($insert, $changedAttributes);
-        $this->refresh();
-    }
 
     /**
      * @inheritdoc
@@ -70,25 +60,25 @@ class Admin extends ActiveRecord
     {
         return [
             [
-                ['auth_key', 'adminname', 'email', 'password_hash', 'status'],
+                ['auth_key', 'username', 'email', 'password_hash', 'status'],
                 'required'
             ],
             [
                 ['status'], 'string'
             ],
             [
-                ['created', 'updated'], 'safe'
+                ['created', 'updated', 'password'], 'safe'
             ],
             [
                 ['auth_key'], 'string', 'max' => 32
             ],
             [
-                ['adminname', 'email', 'password_reset_token', 'account_confirm_token'],
+                ['username', 'email', 'password_reset_token', 'account_confirm_token'],
                 'string', 'max' => 255
             ],
             // Unique attributes
             [
-                ['password_reset_token', 'account_confirm_token', 'adminname', 'email'],
+                ['password_reset_token', 'account_confirm_token', 'username', 'email'],
                 'unique'
             ],
             // Describe `status` attribute
@@ -118,7 +108,7 @@ class Admin extends ActiveRecord
             'password_reset_token'  => 'Password Reset Token',
             'account_confirm_token' => 'Account Confirm Token',
             'status'                => 'Status',
-            'adminname'              => 'Username',
+            'username'              => 'Username',
             'email'                 => 'Email',
             'password_hash'         => 'Password Hash',
             'created_at'            => 'Created At',
@@ -144,142 +134,6 @@ class Admin extends ActiveRecord
     public function getItemNames()
     {
         return $this->hasMany(AuthItem::className(), ['name' => 'item_name'])->viaTable('auth_assignment', ['admin_id' => 'id']);
-    }
-    
-    /* ---------------------------------------------------------------------------------------------
-     * Identity methods
-     * ------------------------------------------------------------------------------------------ */
-
-    /**
-     * @inheritdoc
-     */
-    public static function findIdentity($id)
-    {
-        return static::findOne([
-            'id' => $id,
-            'status' => static::STATUS_ACTIVE
-        ]);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not supported.');
-    }
-
-    /**
-     * Finds admin by password reset token
-     *
-     * @param string $token password reset token
-     * @return static|null
-     */
-    public static function findByPasswordResetToken($token)
-    {
-        if (!static::isPasswordResetTokenValid($token)) {
-            return null;
-        }
-
-        return static::findOne([
-            'password_reset_token' => $token,
-            'status' => static::STATUS_ACTIVE,
-        ]);
-    }
-
-    /**
-     * Finds out if password reset token is valid
-     *
-     * @param string $token password reset token
-     * @return bool
-     */
-    public static function isPasswordResetTokenValid($token)
-    {
-        if (empty($token)) {
-            return false;
-        }
-
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
-        $expire = Yii::$app->params['admin.passwordResetTokenExpire'] ?? 1800;
-        return $timestamp + $expire >= time();
-    }
-    
-    /**
-     * Finds admin by account confirmation token
-     *
-     * @param string $token password reset token
-     * @return static|null
-     */
-    public static function findByAccountConfirmToken($token)
-    {
-        return static::findOne([
-            'account_confirm_token' => $token,
-            'status' => self::STATUS_ACTIVE,
-        ]);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getId()
-    {
-        return $this->getPrimaryKey();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getAuthKey()
-    {
-        return $this->auth_key;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function validateAuthKey($authKey)
-    {
-        return $this->getAuthKey() === $authKey;
-    }
-
-    /**
-     * Generates "remember me" authentication key
-     */
-    public function generateAuthKey()
-    {
-        $this->auth_key = Yii::$app->security->generateRandomString();
-    }
-
-    /**
-     * Generates new password reset token
-     */
-    public function generatePasswordResetToken()
-    {
-        $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
-    }
-
-    /**
-     * Removes password reset token
-     */
-    public function removePasswordResetToken()
-    {
-        $this->password_reset_token = null;
-    }
-    
-    /**
-     * Generates new account confirmation token
-     */
-    public function generateAccountConfirmToken()
-    {
-        $this->account_confirm_token = Yii::$app->security->generateRandomString();
-    }
-    
-    /**
-     * Removes account confirmation token
-     */
-    public function removeAccountConfirmToken()
-    {
-        $this->account_confirm_token = null;
     }
     
     /* ------------------------------------------------------------------------
