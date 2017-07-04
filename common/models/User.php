@@ -53,15 +53,6 @@ class User extends ActiveRecord
             ]
         ];
     }
-    
-    public function beforeValidate()
-    {
-        if ($this->isNewRecord) {
-            $this->generateAuthKey();
-            $this->setPassword($this->password);
-        }
-        return parent::beforeValidate();
-    }
 
     /**
      * @inheritdoc

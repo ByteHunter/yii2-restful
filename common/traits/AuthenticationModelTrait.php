@@ -18,6 +18,20 @@ trait AuthenticationModelTrait
     public $password;
     
     /**
+     * {@inheritDoc}
+     * @see \yii\base\Model::beforeValidate()
+     */
+    public function beforeValidate()
+    {
+        if ($this->isNewRecord) {
+            $this->generateAuthKey();
+            $this->status = self::STATUS_ACTIVE;
+            $this->setPassword($this->password);
+        }
+        return parent::beforeValidate();
+    }
+    
+    /**
      * Validates password
      *
      * @param string $password password to validate

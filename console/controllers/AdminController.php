@@ -33,7 +33,7 @@ class AdminController extends Controller
             $auth = \Yii::$app->getAuthManager();
             $role = $auth->getRole("admin");
             if ($role !== null) {
-                $auth->assign($role, $model->user_id);
+                $auth->assign($role, $model->id);
             } else {
                 $this->stderr("Couldn't assign role 'admin' for {$username}. The role 'admin' ");
                 $this->stderr("doesn't exist. Check your database or run the command ");
