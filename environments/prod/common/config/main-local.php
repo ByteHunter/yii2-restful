@@ -12,5 +12,12 @@ return [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@common/mail',
         ],
+        'mediaUrlManager' => [
+            'class' => '\yii\web\UrlManager',
+            'enablePrettyUrl' => true,
+            'enableStrictParsing' => false,
+            'showScriptName' => false,
+            'baseUrl' => 'https://media.example.com',
+        ],
     ],
 ];

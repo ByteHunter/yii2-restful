@@ -16,5 +16,12 @@ return [
             // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
+        'mediaUrlManager' => [
+            'class' => '\yii\web\UrlManager',
+            'enablePrettyUrl' => true,
+            'enableStrictParsing' => false,
+            'showScriptName' => false,
+            'baseUrl' => 'https://media.example.dev',
+        ],
     ],
 ];
