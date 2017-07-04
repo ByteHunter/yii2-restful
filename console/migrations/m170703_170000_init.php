@@ -89,7 +89,7 @@ class m170703_170000_init extends Migration
             'created_at' => 'INT NULL ',
             
         ], $tableOptions);
-        $this->addPrimaryKey('', 'auth_assignment', ['item_name', ]);
+        $this->addPrimaryKey('', 'auth_assignment', ['item_name', 'user_id', ]);
         
         
         /*
