@@ -25,8 +25,6 @@ class DbController extends Controller
             $this->stdout("skip.\n");
         }
         
-        $this->installBaseData();
-        
         $elapsed_time = \Yii::$app->formatter->asDecimal(microtime(true) - $start, 3);
         $this->stdout("Completed. (took {$elapsed_time} seconds)\n");
     }
