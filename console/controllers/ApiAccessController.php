@@ -27,8 +27,8 @@ class ApiAccessController extends Controller
             $this->stdout(str_pad($model->id, '8', ' ', STR_PAD_RIGHT));
             $this->stdout(str_pad($model->username, '32', ' ', STR_PAD_RIGHT));
             $this->stdout(str_pad($model->access_token, '40', ' ', STR_PAD_RIGHT));
-            $this->stdout(str_pad($model->getTypeLabel(), '8', ' ', STR_PAD_RIGHT));
-            $this->stdout(str_pad($model->getStatusLabel(), '8', ' ', STR_PAD_RIGHT));
+            $this->stdout(str_pad($model->type, '8', ' ', STR_PAD_RIGHT));
+            $this->stdout(str_pad($model->status, '8', ' ', STR_PAD_RIGHT));
             $this->stdout(PHP_EOL);
         }
         
