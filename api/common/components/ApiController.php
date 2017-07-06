@@ -3,6 +3,7 @@ namespace api\common\components;
 
 use yii\rest\ActiveController;
 use yii\web\ForbiddenHttpException;
+use api\modules\v1\models\User;
 
 /**
  * 
@@ -36,16 +37,20 @@ class ApiController extends ActiveController
         return $actions;
     }
     
-    public function prepareIndexDataProvider()
+    public function prepareFindQuery() : \yii\db\ActiveQuery
     {
         $model = new $this->modelClass;
         $model->load(\Yii::$app->request->queryParams, '');
-        $query = $model->find();
+        return $model->find();
+    }
+    
+    public function prepareIndexDataProvider()
+    {
         $page = \Yii::$app->getRequest()->getQueryParam('page', null);
         $keys = \Yii::$app->getRequest()->getQueryParam('keys', null);
         
         $dataProvider = new \yii\data\ActiveDataProvider([
-            'query' => $query,
+            'query' => $this->prepareFindQuery(),
         ]);
         
         // Output keys only
