@@ -65,7 +65,7 @@ class ApiController extends ActiveController
             $dataProvider->pagination = false;
             return [
                 'items' => $dataProvider->getModels(),
-                'links' => [
+                '_links' => [
                     'paginated' => $firstPage,
                 ],
             ];
@@ -74,7 +74,7 @@ class ApiController extends ActiveController
         // Default paginated output
         return [
             'items' => $dataProvider->getModels(),
-            'links' => $dataProvider->getPagination()->getLinks(true),
+            '_links' => $dataProvider->getPagination()->getLinks(true),
         ];
     }
 }
