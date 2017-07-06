@@ -7,6 +7,11 @@ return [
             'v1/user',
             // Add controllers here
         ],
+        'extraPatterns' => [
+            'GET per-page/<per-page>/page/<page>' => 'index',
+            'GET page/<page>' => 'index',
+            'GET <keys:keys>' => 'index',
+        ],
     ],
     // Example of compound primary key
     /*[
@@ -22,6 +27,7 @@ return [
             //'{id}' => '<id:\\d+,\\d+>',
         ],
     ]*/
-    // Example of a custom defined endpoint
+    // Example of a custom defined endpoints
     //'GET service-status' => 'site/status',
+    //'GET v1/<keys:keys>/<controller>' => 'v1/<controller>/index',
 ];

@@ -41,14 +41,35 @@ class ApiController extends ActiveController
         $model = new $this->modelClass;
         $model->load(\Yii::$app->request->queryParams, '');
         $query = $model->find();
-        $paginated = \Yii::$app->getRequest()->getQueryParam('paginated', 'no');
+        $page = \Yii::$app->getRequest()->getQueryParam('page', null);
+        $keys = \Yii::$app->getRequest()->getQueryParam('keys', null);
         
         $dataProvider = new \yii\data\ActiveDataProvider([
             'query' => $query,
         ]);
-        if ($paginated === 'no') {
+        
+        // Output keys only
+        if (isset($keys)) {
             $dataProvider->pagination = false;
+            return $dataProvider->keys;
         }
-        return $dataProvider;
+        
+        // Output not paginated results
+        if (empty($page)) {
+            $firstPage = $dataProvider->getPagination()->createUrl(0, null, true);
+            $dataProvider->pagination = false;
+            return [
+                'items' => $dataProvider->getModels(),
+                'links' => [
+                    'paginated' => $firstPage,
+                ],
+            ];
+        }
+        
+        // Default paginated output
+        return [
+            'items' => $dataProvider->getModels(),
+            'links' => $dataProvider->getPagination()->getLinks(true),
+        ];
     }
 }

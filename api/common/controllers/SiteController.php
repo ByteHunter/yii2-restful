@@ -53,10 +53,10 @@ class SiteController extends Controller
      * Error action
      * @return string[]
      */
-    public function actionError()
-    {
-        return [
-            'status' => 'Error',
-        ];
-    }
+//     public function actionError()
+//     {
+//         return [
+//             'status' => 'Error',
+//         ];
+//     }
 }
