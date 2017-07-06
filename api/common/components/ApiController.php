@@ -66,6 +66,7 @@ class ApiController extends ActiveController
             return [
                 'items' => $dataProvider->getModels(),
                 '_links' => [
+                    'self' => \yii\helpers\Url::toRoute([''], true),
                     'paginated' => $firstPage,
                 ],
             ];
