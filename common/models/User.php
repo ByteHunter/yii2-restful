@@ -1,30 +1,27 @@
 <?php
 namespace common\models;
 
-use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
-use yii\web\IdentityInterface;
 
 /**
  * User model
  *
- * @property int $id
- * @property string $auth_key
- * @property string $password_reset_token
- * @property string $account_confirm_token
- * @property string $status
+ * @property string $id
  * @property string $username
  * @property string $email
  * @property string $password_hash
+ * @property string $firstname
+ * @property string $lastname
+ * @property string $status
  * @property string $created_at
  * @property string $updated_at
- * 
- * @property AuthAssignment[] $authAssignments
- * @property AuthItem[] $itemNames
+ *
+ * @property ApiAccess $apiAccess
  */
-class User extends ActiveRecord
+class User
+    extends ActiveRecord
 {
     use \common\traits\AuthenticationModelTrait;
     use \common\traits\AfterSaveRefreshModelTrait;
@@ -33,17 +30,14 @@ class User extends ActiveRecord
     const STATUS_SUSPENDED  = 'suspended';
     const STATUS_ACTIVE     = 'active';
 
-    /**
-     * @inheritdoc
-     */
+    const SCENARIO_CREATE = 'create';
+    const SCENARIO_LOGIN = 'login';
+
     public static function tableName()
     {
         return 'user';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function behaviors()
     {
         return [
@@ -54,38 +48,31 @@ class User extends ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
             [
-                ['auth_key', 'username', 'email', 'password_hash', 'status'],
-                'required'
+                ['email', 'password_hash'], 'required',
+                'on' => [static::SCENARIO_DEFAULT]
             ],
             [
-                ['status'], 'string'
+                ['email', 'password'], 'required',
+                'on' => [static::SCENARIO_LOGIN]
             ],
             [
-                ['created', 'updated'], 'safe'
+                ['email', 'password'], 'required',
+                'on' => [static::SCENARIO_CREATE]
             ],
+            [['status'], 'string'],
+            [['created_at', 'updated_at'], 'safe'],
+            [['username', 'email', 'password_hash', 'firstname', 'lastname'], 'string', 'max' => 255],
             [
-                ['auth_key'], 'string', 'max' => 32
+                ['username', 'email'],
+                'unique', 'on' => [static::SCENARIO_DEFAULT, static::SCENARIO_CREATE]
             ],
-            [
-                ['username', 'email', 'password_reset_token', 'account_confirm_token'],
-                'string', 'max' => 255
-            ],
-            // Unique attributes
-            [
-                ['password_reset_token', 'account_confirm_token', 'username', 'email'],
-                'unique'
-            ],
-            // Describe `status` attribute
             [
                 'status', 'default',
-                'value' => self::STATUS_SUSPENDED
+                'value' => self::STATUS_ACTIVE
             ],
             [
                 'status', 'in',
@@ -97,56 +84,64 @@ class User extends ActiveRecord
             ],
         ];
     }
-    
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id'                    => 'ID',
-            'auth_key'              => 'Auth Key',
-            'password_reset_token'  => 'Password Reset Token',
-            'account_confirm_token' => 'Account Confirm Token',
-            'status'                => 'Status',
-            'username'              => 'Username',
-            'email'                 => 'Email',
-            'password_hash'         => 'Password Hash',
-            'created_at'            => 'Created At',
-            'updated_at'            => 'Updated At',
-        ];
-    }
-    
-    /* ---------------------------------------------------------------------------------------------
-     * Relations
-     * ------------------------------------------------------------------------------------------ */
-    
-    // Add relations with other models here
-    
-    /* ------------------------------------------------------------------------
-     * Utilities
-     * ------------------------------------------------------------------------ */
 
-    /**
-     * @return boolean
-     */
-    public function isActive()
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+        if ($insert) {
+            $this->setPassword($this->password);
+        }
+        return true;
+    }
+
+    public function validatePassword($password)
+    {
+        return \Yii::$app->security->validatePassword($password, $this->password_hash);
+    }
+
+    public function setPassword($password)
+    {
+        $this->password_hash = \Yii::$app->security->generatePasswordHash($password);
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        $this->refresh();
+        if ($insert) {
+            $this->createApiAccess();
+        }
+        parent::afterSave($insert, $changedAttributes);
+    }
+
+    public function createApiAccess()
+    {
+        $apiAccess = new ApiAccess([
+            'user_id' => $this->id,
+            'username' => $this->username,
+            'email' => $this->email,
+            'type' => ApiAccess::TYPE_USER,
+        ]);
+        $apiAccess->save();
+    }
+
+    public function getApiAccess() : \yii\db\ActiveQuery
+    {
+        return $this->hasOne(ApiAccess::className(), ['user_id' => 'id']);
+    }
+
+    public function isActive() : bool
     {
         return $this->status === self::STATUS_ACTIVE;
     }
-    
-    /**
-     * @return boolean
-     */
-    public function isDeleted()
+
+    public function isDeleted() : bool
     {
         return $this->status === self::STATUS_DELETED;
     }
-    
-    /**
-     * @return boolean
-     */
-    public function isSuspended()
+
+    public function isSuspended() : bool
     {
         return $this->status === self::STATUS_SUSPENDED;
     }
