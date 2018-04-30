@@ -9,26 +9,10 @@ interface ImageInterface
      * @return string
      */
     public function imageAttribute() : string;
-    
-    /**
-     * Must return non-absolute directory where images will be stored
-     * Example: `return 'manufacturer'`
-     * @return string
-     */
-    public function imagePath() :  string;
-    
-    /**
-     * Must return non-associative array containing with and height.
-     * Example: `return [64, 64]`
-     * @return array|NULL
-     */
-    public function getImageMaxSize() : array;
-    
+
     public function hasImage() : bool;
-    
-    public function getLocalImageSource() : ?string;
-    
-    public function getImageSize() : ?array;
-    
-    public function validateImageSize() : bool;
+
+    public function getImageSrc() : string;
+
+    public function getDemoPath() : string;
 }
