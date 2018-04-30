@@ -77,7 +77,7 @@ class ApiController extends ActiveController
 
         $actions['index']['prepareDataProvider'] = [$this, 'prepareIndexDataProvider'];
         $actions['options'] = [
-            'class' => 'api\common\components\OptionsAction',
+            'class' => 'api\common\components\actions\OptionsAction',
         ];
 
         return $actions;
