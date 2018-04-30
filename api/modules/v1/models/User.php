@@ -11,11 +11,16 @@ class User extends \common\models\User implements Linkable
     
     public function fields()
     {
-        return [
+        $fields = parent::fields();
+        // Additional fields can be added here
+        $fields = [
             'id',
             'username',
             'email',
+            'firstname',
+            'lastname',
         ];
+        return $fields;
     }
     
     public function getLinks()

@@ -2,45 +2,70 @@
 
 namespace api\modules\v1\controllers;
 
-use yii\filters\auth\CompositeAuth;
-use yii\filters\auth\HttpBasicAuth;
-use yii\filters\auth\HttpBearerAuth;
-use yii\filters\auth\QueryParamAuth;
-use yii\filters\AccessControl;
 use api\common\components\ApiController;
+use yii\web\UnauthorizedHttpException;
 
-class UserController extends ApiController
+class UserController
+    extends ApiController
 {
     public $modelClass = 'api\modules\v1\models\User';
 
-    /**
-     * 
-     * {@inheritDoc}
-     * @see \yii\rest\Controller::behaviors()
-     */
+    public $createScenario = 'create';
+
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::className(),
-            'authMethods' => [
-                HttpBasicAuth::className(),
-                HttpBearerAuth::className(),
-                QueryParamAuth::className(),
+        $behaviors[] = [
+            'class' => \yii\filters\HttpCache::class,
+            'only' => ['index'],
+            'enabled' => true,
+        ];
+        $behaviors['access']['rules'] = [
+            [
+                'allow' => true,
+                'actions' => ['index', 'view', 'create'],
+                'roles' => ['?'],
+            ],
+            [
+                'allow' => true,
+                'actions' => ['update', 'delete'],
+                'roles' => ['user'],
+            ],
+            [
+                'allow' => true,
+                'actions' => ['options'],
+                'roles' => ['?', '@'],
             ],
         ];
-        $behaviors['access'] = [
-            'class' => AccessControl::className(),
-            'only' => [],
-            'rules' => [
-                [
-                    'allow' => true,
-                    'actions' => ['index', 'view', 'create', 'update', 'delete'],
-                    'roles' => ['@'],
-                ]
-            ],
-        ];
+        $behaviors['authenticator']['except'][] = "create";
+
         return $behaviors;
     }
-}
 
+    /**
+     * @param string $action
+     * @param null $model
+     * @param array $params
+     * @throws UnauthorizedHttpException
+     */
+    public function checkAccess($action, $model = null, $params = [])
+    {
+        if (!in_array($action, ['update', 'delete'])) {
+            return;
+        }
+        if (!isset(\Yii::$app->user->identity)) {
+            throw new UnauthorizedHttpException();
+        }
+        $identity = \Yii::$app->user->identity;
+        if ($action === 'update' && $identity->isUser() && $identity->user->id !== $model->id) {
+            throw new UnauthorizedHttpException();
+        }
+    }
+
+    public function calculateHash() : string
+    {
+        $modelClass = $this->modelClass;
+        $data = $modelClass::find()->all();
+        return md5(serialize($data));
+    }
+}
