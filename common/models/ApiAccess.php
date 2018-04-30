@@ -78,6 +78,19 @@ class ApiAccess
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        if ($insert) {
+            static::setRole($this->id, $this->type);
+            $this->generateToken();
+            try {
+                $this->update();
+            } catch (\Exception $e) {}
+        }
+        $this->refresh();
+    }
     
     /* ---------------------------------------------------------------------------------------------
      * Identity methods
@@ -85,7 +98,7 @@ class ApiAccess
 
     public function generateToken() : void
     {
-
+        // TODO: implement
     }
 
     public static function setRole(int $id, string $roleName) : void
