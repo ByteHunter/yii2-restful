@@ -57,7 +57,7 @@ class ApiAccess
     public function rules()
     {
         return [
-            [['admin_id', 'user_id', 'company_id', 'local_government_id'], 'integer'],
+            [['user_id'], 'integer'],
             [['type', 'status'], 'string'],
             [['last_activity', 'created_at', 'updated_at'], 'safe'],
             [['username', 'email', 'password_hash', 'password_reset_token'], 'string', 'max' => 255],
