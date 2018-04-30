@@ -1,6 +1,8 @@
 <?php
 namespace common\models;
 
+use Lcobucci\JWT\Builder;
+use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -96,9 +98,30 @@ class ApiAccess
      * Identity methods
      * ------------------------------------------------------------------------------------------ */
 
+    public function isTokenValid() : bool
+    {
+        // TODO: add more verifications
+        return $this->access_token !== null;
+    }
+
     public function generateToken() : void
     {
-        // TODO: implement
+        $signer = new Sha256();
+        $builder = new Builder();
+        $builder->setIssuer("https://api.plantgo.net")
+            ->setAudience("https://api.plantgo.net")
+            ->setIssuedAt(time())
+            ->setNotBefore(time() + 60)
+            ->setExpiration(time() + 7200);
+
+        if ($this->isUser()) {
+            $builder->set("user_id", $this->user_id);
+            $builder->set("username", $this->username);
+        }
+
+        $builder->sign($signer, \Yii::$app->params['jwt.key']);
+        $token = $builder->getToken();
+        $this->access_token = (string)$token;
     }
 
     public static function setRole(int $id, string $roleName) : void

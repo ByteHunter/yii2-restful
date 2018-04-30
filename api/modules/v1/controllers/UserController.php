@@ -8,6 +8,8 @@ use yii\web\UnauthorizedHttpException;
 class UserController
     extends ApiController
 {
+    use \api\common\traits\LoginActionTrait;
+
     public $modelClass = 'api\modules\v1\models\User';
 
     public $createScenario = 'create';
@@ -39,6 +41,8 @@ class UserController
         ];
         $behaviors['authenticator']['except'][] = "create";
 
+        $behaviors = array_merge_recursive($behaviors, $this->getLoginBehaviors());
+
         return $behaviors;
     }
 
@@ -60,6 +64,20 @@ class UserController
         if ($action === 'update' && $identity->isUser() && $identity->user->id !== $model->id) {
             throw new UnauthorizedHttpException();
         }
+    }
+
+    protected function verbs()
+    {
+        $verbs = parent::verbs();
+        $verbs = array_merge($verbs, $this->getLoginVerbs());
+        return $verbs;
+    }
+
+    public function actions()
+    {
+        $actions = parent::actions();
+        $actions = array_merge($actions, $this->getLoginActions());
+        return $actions;
     }
 
     public function calculateHash() : string

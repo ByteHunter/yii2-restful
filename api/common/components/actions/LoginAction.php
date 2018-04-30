@@ -1,6 +1,7 @@
 <?php
 namespace api\common\components\actions;
 
+use yii\db\ActiveRecord;
 use yii\rest\Action;
 
 class LoginAction extends Action
@@ -30,8 +31,11 @@ class LoginAction extends Action
         if (!$model->validatePassword($form->password)) {
             throw new \yii\web\ForbiddenHttpException();
         }
-        $model->apiAccess->generateToken();
-        $model->apiAccess->update();
+
+        if (!$model->apiAccess->isTokenValid()) {
+            $model->apiAccess->generateToken();
+            $model->apiAccess->update();
+        }
 
         return [
             "token" => $model->apiAccess->access_token,
@@ -43,7 +47,7 @@ class LoginAction extends Action
      * @return mixed
      * @throws \yii\web\ForbiddenHttpException
      */
-    public function getModel($email)
+    public function getModel($email) : ActiveRecord
     {
         $model = $this->modelClass::findOne(["email" => $email]);
         if (isset($model)) {
