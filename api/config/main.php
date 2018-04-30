@@ -27,6 +27,8 @@ return [
         'user' => [
             'identityClass' => 'common\models\ApiAccess',
             'enableAutoLogin' => false,
+            'enableSession' => false,
+            'loginUrl' => null,
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

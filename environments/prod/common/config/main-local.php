@@ -11,13 +11,14 @@ return [
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@common/mail',
+            'useFileTransport' => false,
         ],
         'mediaUrlManager' => [
             'class' => '\yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'enableStrictParsing' => false,
             'showScriptName' => false,
-            'baseUrl' => 'https://media.example.com',
+            'baseUrl' => 'https://media.yii-restful.dev',
         ],
     ],
 ];
