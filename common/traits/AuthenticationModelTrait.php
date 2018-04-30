@@ -12,7 +12,7 @@ use Yii;
 trait AuthenticationModelTrait
 {
     /**
-     * Auxiliar password attribute which is used to calculate the hash.
+     * Auxiliary password attribute which is used to calculate the hash.
      * @var string un-hashed password
      */
     public $password;
@@ -46,6 +46,7 @@ trait AuthenticationModelTrait
      * Generates password hash from password and sets it to the model
      *
      * @param string $password
+     * @throws \yii\base\Exception
      */
     public function setPassword($password)
     {
@@ -108,21 +109,21 @@ trait AuthenticationModelTrait
             'status' => self::STATUS_ACTIVE,
         ]);
     }
-    
+
     /**
      * @inheritdoc
      */
     public function getAuthKey()
     {
-        return $this->auth_key;
+        return null; //return $this->auth_key;
     }
-    
+
     /**
      * @inheritdoc
      */
     public function validateAuthKey($authKey)
     {
-        return $this->getAuthKey() === $authKey;
+        return true; //return $this->getAuthKey() === $authKey;
     }
     
     /**
@@ -130,7 +131,7 @@ trait AuthenticationModelTrait
      */
     public function generateAuthKey()
     {
-        $this->auth_key = Yii::$app->security->generateRandomString();
+        //$this->auth_key = Yii::$app->security->generateRandomString();
     }
     
     /**
