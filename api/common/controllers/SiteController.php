@@ -1,11 +1,10 @@
 <?php
 namespace api\common\controllers;
 
+use yii\filters\AccessControl;
 use yii\rest\Controller;
 use yii\filters\auth\CompositeAuth;
-use yii\filters\auth\HttpBasicAuth;
 use yii\filters\auth\HttpBearerAuth;
-use yii\filters\auth\QueryParamAuth;
 
 class SiteController extends Controller
 {
@@ -17,32 +16,49 @@ class SiteController extends Controller
     {
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
-            'class' => CompositeAuth::className(),
-            'authMethods' => [
-                HttpBasicAuth::className(),
-                HttpBearerAuth::className(),
-                QueryParamAuth::className(),
+            'class' => CompositeAuth::class,
+            'authMethods' => [HttpBearerAuth::className()],
+            'except' => ["status", "error"]
+        ];
+        $behaviors['access'] = [
+            'class' => AccessControl::class,
+            'rules' => [
+                [
+                    'allow' => true,
+                    'actions' => ["index"],
+                    'roles' => ["@", "?"],
+                ],
+                [
+                    'allow' => true,
+                    'actions' => ["status"],
+                    'roles' => ["?"],
+                ],
+                [
+                    'allow' => true,
+                    'actions' => ["verify-token"],
+                    'roles' => ["@"],
+                ],
             ],
+            'denyCallback' => function ($rule, $action) {
+                throw new \yii\web\UnauthorizedHttpException("Your request was made with invalid credentials.");
+            },
         ];
         return $behaviors;
     }
     
     /**
      * This action shows useful info about this service and what can be done next
-     * @return string[]
      */
-    public function actionIndex()
+    public function actionIndex() : void
     {
-        return [
-            'serviceStatus' => 'Ok',
-        ];
+        return;
     }
     
     /**
      * Example of status info endpoint
      * @return string[]
      */
-    public function actionStatus()
+    public function actionStatus() : array
     {
         return [
             'status' => 'OK',
@@ -53,10 +69,15 @@ class SiteController extends Controller
      * Error action
      * @return string[]
      */
-//     public function actionError()
-//     {
-//         return [
-//             'status' => 'Error',
-//         ];
-//     }
+     public function actionError()
+     {
+         return [
+             'message' => "Error",
+         ];
+     }
+
+    public function actionVerifyToken() : void
+    {
+        \Yii::$app->getResponse()->setStatusCode("204");
+    }
 }

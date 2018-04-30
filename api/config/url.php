@@ -12,4 +12,7 @@ return [
             'GET <keys:keys>' => 'index',
         ],
     ],
+    'status' => 'site/status',
+    'GET verify/token' => 'site/verify-token',
+    'OPTIONS verify/token' => 'site/options',
 ];
