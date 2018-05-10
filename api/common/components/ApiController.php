@@ -34,7 +34,8 @@ class ApiController extends ActiveController
 
         $behaviors['authenticator'] = [
             'class' => HttpBearerAuth::class,
-            'except' => ['options', 'index', 'view'],
+            'except' => [],
+            'optional' => ["options", "index", "view"],
         ];
         $behaviors['access'] = [
             'class' => AccessControl::class,
@@ -48,7 +49,7 @@ class ApiController extends ActiveController
                 [
                     'allow' => true,
                     'actions' => ['create', 'update', 'delete'],
-                    'roles' => ['user'],
+                    'roles' => ["@"],
                 ],
                 [
                     'allow' => true,

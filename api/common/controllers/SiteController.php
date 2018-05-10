@@ -18,7 +18,8 @@ class SiteController extends Controller
         $behaviors['authenticator'] = [
             'class' => CompositeAuth::class,
             'authMethods' => [HttpBearerAuth::className()],
-            'except' => ["status", "error"]
+            'except' => [],
+            'optional' => ["index", "status", "error"],
         ];
         $behaviors['access'] = [
             'class' => AccessControl::class,
@@ -26,12 +27,12 @@ class SiteController extends Controller
                 [
                     'allow' => true,
                     'actions' => ["index"],
-                    'roles' => ["@", "?"],
+                    'roles' => ["?", "@"],
                 ],
                 [
                     'allow' => true,
                     'actions' => ["status"],
-                    'roles' => ["?"],
+                    'roles' => ["?", "@"],
                 ],
                 [
                     'allow' => true,
