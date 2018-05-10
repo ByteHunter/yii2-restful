@@ -52,18 +52,16 @@ class SiteController extends Controller
      */
     public function actionIndex() : void
     {
-        return;
+        \Yii::$app->getResponse()->setStatusCode("204");
     }
     
     /**
      * Example of status info endpoint
      * @return string[]
      */
-    public function actionStatus() : array
+    public function actionStatus() : void
     {
-        return [
-            'status' => 'OK',
-        ];
+        \Yii::$app->getResponse()->setStatusCode("204");
     }
     
     /**
