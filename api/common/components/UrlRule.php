@@ -10,7 +10,7 @@ class UrlRule extends \yii\rest\UrlRule
 
     public $paged = true;
 
-    public $prefix = 'sr-';
+    public $relationPrefix = 'sr-';
 
     public function init()
     {
@@ -39,7 +39,7 @@ class UrlRule extends \yii\rest\UrlRule
     {
         $patterns = [];
         foreach ($this->relations as $relation) {
-            $patterns["GET {id}/{$relation}"] = "{$this->prefix}{$relation}";
+            $patterns["GET {id}/{$relation}"] = "{$this->relationPrefix}{$relation}";
         }
         return $patterns;
     }
@@ -49,11 +49,11 @@ class UrlRule extends \yii\rest\UrlRule
         $patterns = [];
         foreach ($this->crudRelations as $relation)
         {
-            $patterns["GET {id}/{$relation}"] = "{$this->prefix}{$relation}";
-            $patterns["PATCH {id}/{$relation}"] = "{$this->prefix}{$relation}-update";
-            $patterns["POST {id}/{$relation}"] = "{$this->prefix}{$relation}-add";
-            $patterns["DELETE {id}/{$relation}/<subId>"] = "{$this->prefix}{$relation}-delete";
-            $patterns["DELETE {id}/{$relation}"] = "{$this->prefix}{$relation}-delete";
+            $patterns["GET {id}/{$relation}"] = "{$this->relationPrefix}{$relation}";
+            $patterns["PATCH {id}/{$relation}"] = "{$this->relationPrefix}{$relation}-update";
+            $patterns["POST {id}/{$relation}"] = "{$this->relationPrefix}{$relation}-add";
+            $patterns["DELETE {id}/{$relation}/<subId>"] = "{$this->relationPrefix}{$relation}-delete";
+            $patterns["DELETE {id}/{$relation}"] = "{$this->relationPrefix}{$relation}-delete";
             $patterns["OPTIONS {id}/{$relation}"] = "options";
             $patterns["OPTIONS {id}/{$relation}/<subId>"] = "options";
         }
