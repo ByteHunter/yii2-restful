@@ -63,6 +63,7 @@ class User
                 ['email', 'password'], 'required',
                 'on' => [static::SCENARIO_CREATE]
             ],
+            [["email"], "email"],
             [['status'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['username', 'email', 'password_hash', 'firstname', 'lastname'], 'string', 'max' => 255],
