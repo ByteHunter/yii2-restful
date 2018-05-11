@@ -19,7 +19,7 @@ return [
     ],
     'components' => [
         'request' => [
-            'csrfParam' => '_csrf-frontend',
+            'enableCsrfCookie' => false,
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
             ]
