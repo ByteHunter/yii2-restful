@@ -27,5 +27,6 @@ class OptionsAction extends \yii\base\Action
         }
         $options = $this->collectionOptions;
         Yii::$app->getResponse()->getHeaders()->set('Access-Control-Allow-Methods', implode(', ', $options));
+        Yii::$app->getResponse()->setStatusCode("204");
     }
 }

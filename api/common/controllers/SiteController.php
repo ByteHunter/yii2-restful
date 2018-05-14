@@ -15,11 +15,20 @@ class SiteController extends Controller
     public function behaviors()
     {
         $behaviors = parent::behaviors();
+
+        $behaviors['corsFilter'] = [
+            'class' => \yii\filters\Cors::class,
+            'cors' => [
+                'Origin' => ['*'],
+                'Access-Control-Request-Headers' => ['Authorization', 'Content-Type'],
+                'Access-Control-Allow-Credentials' => true,
+            ]
+        ];
         $behaviors['authenticator'] = [
             'class' => CompositeAuth::class,
             'authMethods' => [HttpBearerAuth::className()],
             'except' => [],
-            'optional' => ["index", "status", "error"],
+            'optional' => ["index", "status", "error", "options", "verify-token"],
         ];
         $behaviors['access'] = [
             'class' => AccessControl::class,
@@ -39,12 +48,35 @@ class SiteController extends Controller
                     'actions' => ["verify-token"],
                     'roles' => ["@"],
                 ],
+                [
+                    'allow' => true,
+                    'actions' => ['options'],
+                    'roles' => ['?', '@'],
+                ],
             ],
             'denyCallback' => function ($rule, $action) {
                 throw new \yii\web\UnauthorizedHttpException("Your request was made with invalid credentials.");
             },
         ];
         return $behaviors;
+    }
+
+    public function actions()
+    {
+        $actions = parent::actions();
+
+        $actions['options'] = [
+            'class' => 'api\common\components\actions\OptionsAction',
+        ];
+
+        return $actions;
+    }
+
+    protected function verbs()
+    {
+        $verbs = parent::verbs();
+        $verbs['options'] = ['OPTIONS'];
+        return $verbs;
     }
     
     /**

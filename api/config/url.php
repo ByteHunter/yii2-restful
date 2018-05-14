@@ -16,7 +16,10 @@ return [
             'v1/user',
         ],
     ],
-    'status' => 'site/status',
-    'GET v1/verify/token' => 'site/verify-token',
     'OPTIONS v1/verify/token' => 'site/options',
+    "OPTIONS status" => "site/options",
+    "OPTIONS options" => "site/options",
+    "OPTIONS /" => "site/options",
+    'GET status' => 'site/status',
+    'GET v1/verify/token' => 'site/verify-token',
 ];
