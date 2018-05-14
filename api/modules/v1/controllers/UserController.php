@@ -31,7 +31,7 @@ class UserController
             [
                 'allow' => true,
                 'actions' => ['update', 'delete'],
-                'roles' => ['user'],
+                'roles' => ['@'],
             ],
             [
                 'allow' => true,

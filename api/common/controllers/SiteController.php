@@ -26,7 +26,7 @@ class SiteController extends Controller
         ];
         $behaviors['authenticator'] = [
             'class' => CompositeAuth::class,
-            'authMethods' => [HttpBearerAuth::className()],
+            'authMethods' => [HttpBearerAuth::class],
             'except' => [],
             'optional' => ["index", "status", "error", "options", "verify-token"],
         ];
@@ -89,7 +89,6 @@ class SiteController extends Controller
     
     /**
      * Example of status info endpoint
-     * @return string[]
      */
     public function actionStatus() : void
     {
