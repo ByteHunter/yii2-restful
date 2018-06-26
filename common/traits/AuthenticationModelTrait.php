@@ -1,6 +1,7 @@
 <?php
 namespace common\traits;
 use Yii;
+use yii\base\NotSupportedException;
 
 /**
  * Common authentication methods for user models

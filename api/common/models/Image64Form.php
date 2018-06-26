@@ -53,6 +53,7 @@ class Image64Form
     /**
      * Uploads the image to the specified directory inside '@media/'
      * @param string $directory
+     * @param bool $multiple
      * @return bool
      * @throws \yii\base\Exception
      */

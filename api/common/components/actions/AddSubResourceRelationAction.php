@@ -19,6 +19,11 @@ class AddSubResourceRelationAction extends Action
         }
     }
 
+    /**
+     * @param $id
+     * @throws \yii\web\NotFoundHttpException
+     * @todo Revise return value
+     */
     public function run($id)
     {
         $model = $this->findModel($id);

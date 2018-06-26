@@ -39,9 +39,12 @@ class ImageForm extends Model
             ],
         ];
     }
-    
+
     /**
      * Uploads the image to the specified directory inside '@media/'
+     * @param string $directory
+     * @return bool
+     * @throws \yii\base\Exception
      */
     public function upload(string $directory)
     {
@@ -57,5 +60,6 @@ class ImageForm extends Model
             $this->src = \Yii::$app->mediaUrlManager->createUrl("{$directory}/" . $this->file_name);
             return $this->imageFile->saveAs($file);
         }
+        return false;
     }
 }

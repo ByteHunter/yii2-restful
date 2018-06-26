@@ -4,6 +4,7 @@ namespace common\models;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Yii;
+use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
@@ -50,7 +51,7 @@ class ApiAccess
     {
         return [
             [
-                'class' => TimestampBehavior::className(),
+                'class' => TimestampBehavior::class,
                 'value' => new Expression('now()'),
             ]
         ];
@@ -78,7 +79,7 @@ class ApiAccess
 
     public function getUser() : \yii\db\ActiveQuery
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     public function afterSave($insert, $changedAttributes)

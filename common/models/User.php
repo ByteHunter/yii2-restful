@@ -42,7 +42,7 @@ class User
     {
         return [
             [
-                'class' => TimestampBehavior::className(),
+                'class' => TimestampBehavior::class,
                 'value' => new Expression('now()'),
             ]
         ];
@@ -129,7 +129,7 @@ class User
 
     public function getApiAccess() : \yii\db\ActiveQuery
     {
-        return $this->hasOne(ApiAccess::className(), ['user_id' => 'id']);
+        return $this->hasOne(ApiAccess::class, ['user_id' => 'id']);
     }
 
     public function isActive() : bool
