@@ -42,11 +42,6 @@ class ApiAccess
     const STATUS_SUSPENDED  = 'suspended';
     const STATUS_ACTIVE     = 'active';
 
-    public static function tableName()
-    {
-        return 'api_access';
-    }
-
     public function behaviors()
     {
         return [

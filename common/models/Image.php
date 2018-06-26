@@ -18,14 +18,6 @@ class Image extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
-        return 'image';
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [

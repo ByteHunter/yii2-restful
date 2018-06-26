@@ -33,11 +33,6 @@ class User
     const SCENARIO_CREATE = 'create';
     const SCENARIO_LOGIN = 'login';
 
-    public static function tableName()
-    {
-        return 'user';
-    }
-
     public function behaviors()
     {
         return [
