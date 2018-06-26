@@ -1,0 +1,26 @@
+#!/bin/sh
+
+rm report.json
+
+mysql -u root restful_dev < reset.sql
+
+check_mysql="$?"
+
+if [ "$check_mysql" -eq 0 ] ; then
+    echo "Database tables truncated."
+else
+    echo "Error, could not truncate tables."
+    exit 1
+fi
+
+newman run collection.json -e environment.json --color -r cli,json --reporter-json-export report.json
+
+check_newman="$?"
+
+if [ "$check_newman" -eq 0 ] ; then
+    echo "Can proceed with the commit"
+    exit 0
+else
+    echo "Tests not passed, cannot commit"
+    exit 1
+fi

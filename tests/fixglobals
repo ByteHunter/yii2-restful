@@ -1,0 +1,1 @@
+sed -i -e 's/  ],/  ],\n  "name": "Malvavisco Globals",/g' globals.json

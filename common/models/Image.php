@@ -2,15 +2,12 @@
 
 namespace common\models;
 
-use yii\db\ActiveQuery;
-
 /**
  * This is the model class for table "image".
  *
- * NOTE: This is just an example of implementation
+ * NOTE: This is a base implementation
  *
  * @property integer $id
- * @property integer $user_id
  * @property string $type
  * @property string $path
  */
@@ -33,16 +30,11 @@ class Image extends \yii\db\ActiveRecord
     {
         return [
             [["type"], "required"],
-            [["user_id"], "integer"],
             [["path"], "string"],
+            ["type", "string", "max" => 64],
             ['type', 'in', 'range' => [
                 self::TYPE_USER
             ]],
         ];
-    }
-
-    public function getUser() : ActiveQuery
-    {
-        return $this->hasOne(User::className(), ['id' => 'species_id']);
     }
 }

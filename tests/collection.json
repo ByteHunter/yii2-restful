@@ -1,0 +1,1396 @@
+{
+	"info": {
+		"_postman_id": "749a3afd-eb8e-4207-a097-2a1c067da879",
+		"name": "API Development Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "cors",
+			"description": "",
+			"item": [
+				{
+					"name": "Options for token verification",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bcbcc399-d615-42fa-8aa0-b75be1a346d8",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "{{origin}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{host}}/v1/verify/token",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"verify",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read options",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "617ca2b3-eae2-4593-8114-f1f29798594b",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "{{origin}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{host}}/v1/user/0",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Index options",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6bc4e0d5-2f4c-49c1-b3e4-dcc683919875",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "{{origin}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{host}}/v1/user",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resource options",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0cbfcfe8-fdb4-47e0-adf7-506896c545f3",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "{{origin}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{host}}/v1/user/options",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"options"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Getting the options",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5ed35322-7822-4d8a-bb37-b845ca5484b7",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "{{origin}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{host}}/options",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"options"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Options for the base route",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "01108068-9999-46f5-a844-7369adb6aa6d",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "{{origin}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{host}}/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Service status options",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a4b163c7-c87c-49f9-8d09-2823b3cee2a6",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "{{origin}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{host}}/status",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"status"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c2da6988-37f0-439a-bab5-ea858e837a0d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "ab176893-6c1c-4520-a1c6-2add3e8a23c8",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "user",
+			"description": "",
+			"item": [
+				{
+					"name": "Index of users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4cdf167d-cdbf-45e8-8bd2-614321d87a0f",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "{{origin}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{host}}/v1/user",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cannot register with missing fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4f08eb34-bcc7-41a1-a389-5ac177138037",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "{{origin}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"url": {
+							"raw": "{{host}}/v1/user",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register a user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f1701c59-c901-45c4-9e67-3019bb0ca647",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.globals.set(\"user.test\", jsonData);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "{{origin}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"test@example.com\",\n\t\"password\": \"1234\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/v1/user",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cannot register a user with same email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3ab374f8-2577-4931-ac48-9d1d4951efd8",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "{{origin}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"test@example.com\",\n\t\"password\": \"1234\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/v1/user",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read user's details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dc604bc6-2112-4bae-8114-aa961ac812b4",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f9c4f01a-ffd8-45b2-8557-934e6256dcf5",
+								"type": "text/javascript",
+								"exec": [
+									"let user = pm.globals.get(\"user.test\");",
+									"pm.variables.set(\"user_id\", user.id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "localhost:9999"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}",
+								"disabled": true
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{host}}/v1/user/{{user_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cannot find user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e03212cb-ffc7-46cb-9964-02db9a0741ce",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "localhost:9999"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}",
+								"disabled": true
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{host}}/v1/user/0",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cannot login with invalid email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d8c1872c-9771-47db-a4bd-58f0054e7301",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "{{origin}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"invalid\",\n\t\"password\": \"1234\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/v1/user/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cannot login with invalid password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "409d9da2-6381-4877-b466-588641413c04",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "bcb35607-1b36-4123-a6fb-ddc484ca6573",
+								"type": "text/javascript",
+								"exec": [
+									"let user = pm.globals.get(\"user.test\");",
+									"pm.variables.set(\"email\", user.email);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "{{origin}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"{{email}}\",\n\t\"password\": \"12345\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/v1/user/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login as user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a0e68d90-f342-49ca-b8ba-fa353d29f471",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});",
+									"",
+									"pm.test(\"Update user data JWT\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    var user = pm.globals.get(\"user.test\");",
+									"    user.jwt = jsonData.token;",
+									"    pm.globals.set(\"user.test\", user);",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "943c9c02-1f92-45cd-839f-8427487c0e59",
+								"type": "text/javascript",
+								"exec": [
+									"let user = pm.globals.get(\"user.test\");",
+									"pm.variables.set(\"email\", user.email);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "{{origin}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"{{email}}\",\n\t\"password\": \"1234\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/v1/user/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify user's token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c92974fe-6f41-4e4d-a389-a2a65bda6e66",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1a214062-b04f-4135-b415-318beebcf759",
+								"type": "text/javascript",
+								"exec": [
+									"let user = pm.globals.get(\"user.test\");",
+									"pm.variables.set(\"jwt\", user ? user.jwt : '');"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "{{origin}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{host}}/v1/verify/token",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"verify",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cannot verify user's invalid token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "98d277b6-f2be-4c5f-af3f-8acb338b488b",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "{{origin}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer invalid.jwt.string"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{host}}/v1/verify/token",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"verify",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cannot update user's data without auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e56ed83e-9066-442d-9184-cc004e7033b2",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d7a9fd8a-fc96-4f37-abd9-27faa9f567c7",
+								"type": "text/javascript",
+								"exec": [
+									"let user = pm.globals.get(\"user.test\");",
+									"pm.variables.set(\"user_id\", user.id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "{{origin}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"url": {
+							"raw": "{{host}}/v1/user/{{user_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cannot update user's data with invalid auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "60375d0c-41bb-44ec-b402-b613cca737a9",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a06df686-8390-4e6e-933d-e40720be0e54",
+								"type": "text/javascript",
+								"exec": [
+									"let user = pm.globals.get(\"user.test\");",
+									"pm.variables.set(\"user_id\", user.id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "{{origin}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer invalid.jwt.string"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"url": {
+							"raw": "{{host}}/v1/user/{{user_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cannot update with invalid email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bf2a2e9c-c3df-4ff3-ab39-1c18fafc374f",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f7221162-992a-4edf-96ff-78da858c5a1c",
+								"type": "text/javascript",
+								"exec": [
+									"let user = pm.globals.get(\"user.test\");",
+									"pm.variables.set(\"user_id\", user.id);",
+									"pm.variables.set(\"jwt\", user.jwt);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "{{origin}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"invalid\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/v1/user/{{user_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user's data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c455b565-0bf4-49fa-8dff-ba77b461f9ad",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a7fce68d-cc3a-4ac5-b242-532312c08366",
+								"type": "text/javascript",
+								"exec": [
+									"let user = pm.globals.get(\"user.test\");",
+									"pm.variables.set(\"user_id\", user.id);",
+									"pm.variables.set(\"jwt\", user.jwt);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "{{origin}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"url": {
+							"raw": "{{host}}/v1/user/{{user_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cannot delete user without auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1052e902-5f78-41f5-9d00-56e2e06746fd",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8f42d660-9666-49f5-99e5-029fd81925ab",
+								"type": "text/javascript",
+								"exec": [
+									"let user = pm.globals.get(\"user.test\");",
+									"pm.variables.set(\"user_id\", user.id);",
+									"pm.variables.set(\"jwt\", user.jwt);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "{{origin}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/v1/user/{{user_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bf0e99b5-e8ac-480f-baad-3404acba3281",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8f42d660-9666-49f5-99e5-029fd81925ab",
+								"type": "text/javascript",
+								"exec": [
+									"let user = pm.globals.get(\"user.test\");",
+									"pm.variables.set(\"user_id\", user.id);",
+									"pm.variables.set(\"jwt\", user.jwt);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "{{origin}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/v1/user/{{user_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "general",
+			"description": "",
+			"item": [
+				{
+					"name": "Base path index",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8180b60b-08c4-4828-a262-43dbbc41db02",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "{{origin}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}",
+								"disabled": true
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{host}}/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Status of the service",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0228d435-9370-4751-9cbe-d9471f9e5c55",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.test(\"Valid header Access-Control-Allow-Origin: localhost:9999\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.eql(pm.environment.get(\"origin\"));",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "{{origin}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}",
+								"disabled": true
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{host}}/status",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"status"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
