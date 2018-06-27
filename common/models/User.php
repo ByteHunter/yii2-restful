@@ -12,8 +12,6 @@ use yii\db\Expression;
  * @property string $username
  * @property string $email
  * @property string $password_hash
- * @property string $firstname
- * @property string $lastname
  * @property string $status
  * @property string $created_at
  * @property string $updated_at
@@ -61,7 +59,7 @@ class User
             [["email"], "email"],
             [['status'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
-            [['username', 'email', 'password_hash', 'firstname', 'lastname'], 'string', 'max' => 255],
+            [['username', 'email', 'password_hash'], 'string', 'max' => 255],
             [
                 ['username', 'email'],
                 'unique', 'on' => [static::SCENARIO_DEFAULT, static::SCENARIO_CREATE]

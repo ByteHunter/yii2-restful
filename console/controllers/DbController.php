@@ -8,16 +8,17 @@ class DbController extends Controller
 {
     public function actionInit()
     {
-        $start = microtime(true);
         $this->stdout("Database initialization.\n");
         $this->stdout("This process will insert base data into database.\n");
         if (!$this->confirm("Continue? ")) {
             return 0;
         }
-        
+
+
         $this->stdout("Initializing authentication items... ");
+        $start = microtime(true);
         $auth = \Yii::$app->getAuthManager();
-        $role = $auth->createRole("admin");
+        $role = $auth->createRole("user");
         try {
             $auth->add($role);
             $this->stdout("done.\n");

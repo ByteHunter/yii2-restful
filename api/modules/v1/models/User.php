@@ -17,8 +17,6 @@ class User extends \common\models\User implements Linkable
             'id',
             'username',
             'email',
-            'firstname',
-            'lastname',
         ];
         return $fields;
     }
