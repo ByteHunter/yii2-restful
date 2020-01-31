@@ -4,6 +4,11 @@ namespace console\controllers;
 
 use yii\console\Controller;
 
+/**
+ * Class DbController
+ * @package console\controllers
+ * @deprecated
+ */
 class DbController extends Controller
 {
     public function actionInit()
