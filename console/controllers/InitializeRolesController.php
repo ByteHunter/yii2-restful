@@ -9,7 +9,8 @@ use yii\rbac\ManagerInterface;
 /**
  * Initializes roles and permissions
  * @package console\controllers
- * @author ByteHunter
+ * @author Rostislav Pleshivtsev Oparina
+ * @link bytehunter.net
  */
 /** @noinspection PhpUnused */
 class InitializeRolesController extends Controller
