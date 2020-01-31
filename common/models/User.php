@@ -1,7 +1,11 @@
 <?php
 namespace common\models;
 
+use common\traits\AfterSaveRefreshModelTrait;
+use common\traits\AuthenticationModelTrait;
+use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
 
@@ -18,11 +22,10 @@ use yii\db\Expression;
  *
  * @property ApiAccess $apiAccess
  */
-class User
-    extends ActiveRecord
+class User extends ActiveRecord
 {
-    use \common\traits\AuthenticationModelTrait;
-    use \common\traits\AfterSaveRefreshModelTrait;
+    use AuthenticationModelTrait;
+    use AfterSaveRefreshModelTrait;
     
     const STATUS_DELETED    = 'deleted';
     const STATUS_SUSPENDED  = 'suspended';
@@ -79,6 +82,16 @@ class User
         ];
     }
 
+    public function beforeValidate()
+    {
+        if ($this->isNewRecord && $this->scenario === self::SCENARIO_CREATE) {
+            $this->generateAuthKey();
+            $this->status = self::STATUS_ACTIVE;
+            $this->setPassword($this->password);
+        }
+        return parent::beforeValidate();
+    }
+
     public function beforeSave($insert)
     {
         if (!parent::beforeSave($insert)) {
@@ -92,12 +105,12 @@ class User
 
     public function validatePassword($password)
     {
-        return \Yii::$app->security->validatePassword($password, $this->password_hash);
+        return Yii::$app->security->validatePassword($password, $this->password_hash);
     }
 
     public function setPassword($password)
     {
-        $this->password_hash = \Yii::$app->security->generatePasswordHash($password);
+        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
 
     public function afterSave($insert, $changedAttributes)
@@ -120,7 +133,7 @@ class User
         $apiAccess->save();
     }
 
-    public function getApiAccess() : \yii\db\ActiveQuery
+    public function getApiAccess() : ActiveQuery
     {
         return $this->hasOne(ApiAccess::class, ['user_id' => 'id']);
     }

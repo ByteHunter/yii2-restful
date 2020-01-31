@@ -1,11 +1,12 @@
 <?php
 namespace common\models;
 
+use Exception;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Yii;
-use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use yii\db\Expression;
@@ -72,9 +73,20 @@ class ApiAccess
         ];
     }
 
-    public function getUser() : \yii\db\ActiveQuery
+    public function getUser() : ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+        if ($insert) {
+            $this->generateToken();
+        }
+        return true;
     }
 
     public function afterSave($insert, $changedAttributes)
@@ -82,10 +94,6 @@ class ApiAccess
         parent::afterSave($insert, $changedAttributes);
         if ($insert) {
             static::setRole($this->id, $this->type);
-            $this->generateToken();
-            try {
-                $this->update();
-            } catch (\Exception $e) {}
         }
         $this->refresh();
     }
@@ -96,16 +104,20 @@ class ApiAccess
 
     public function isTokenValid() : bool
     {
-        // TODO: add more verifications
-        return $this->access_token !== null;
+        return !empty($this->access_token);
+    }
+
+    public function clearToken() : void
+    {
+        $this->access_token = null;
     }
 
     public function generateToken() : void
     {
         $signer = new Sha256();
         $builder = new Builder();
-        $builder->setIssuer("https://api.plantgo.net")
-            ->setAudience("https://api.plantgo.net")
+        $builder->setIssuer("https://api.example.com")
+            ->setAudience("https://api.example.com")
             ->setIssuedAt(time())
             ->setNotBefore(time() + 60)
             ->setExpiration(time() + 7200);
@@ -115,18 +127,18 @@ class ApiAccess
             $builder->set("username", $this->username);
         }
 
-        $builder->sign($signer, \Yii::$app->params['jwt.key']);
+        $builder->sign($signer, Yii::$app->params['jwt.key']);
         $token = $builder->getToken();
         $this->access_token = (string)$token;
     }
 
     public static function setRole(int $id, string $roleName) : void
     {
-        $auth = \Yii::$app->getAuthManager();
+        $auth = Yii::$app->getAuthManager();
         $role = $auth->getRole($roleName);
         try {
             $auth->assign($role, $id);
-        } catch (\Exception $e) {}
+        } catch (Exception $e) {}
     }
 
     public static function findIdentity($id)
@@ -175,7 +187,7 @@ class ApiAccess
 
     public function getAuthKey()
     {
-        throw new NotSupportedException('"getAuthKey" is disabled.');
+        return $this->access_token;
     }
 
     public function validateAuthKey($authKey)
@@ -202,7 +214,7 @@ class ApiAccess
     {
         try {
             $this->password_hash = Yii::$app->security->generatePasswordHash($password);
-        } catch (\Exception $e) {}
+        } catch (Exception $e) {}
     }
     
     /* ------------------------------------------------------------------------
