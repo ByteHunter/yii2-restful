@@ -1,14 +1,15 @@
 <?php
+
 namespace common\traits;
+
 use Yii;
 use yii\base\NotSupportedException;
 
 /**
  * Common authentication methods for user models
- * 
+ *
  * @author Rostislav Pleshivtsev Oparina
  * @link bytehunter.net
- *
  */
 trait AuthenticationModelTrait
 {
@@ -17,7 +18,7 @@ trait AuthenticationModelTrait
      * @var string un-hashed password
      */
     public $password;
-    
+
     /**
      * {@inheritDoc}
      * @see \yii\base\Model::beforeValidate()
@@ -31,7 +32,7 @@ trait AuthenticationModelTrait
         }
         return parent::beforeValidate();
     }
-    
+
     /**
      * Validates password
      *
@@ -42,7 +43,7 @@ trait AuthenticationModelTrait
     {
         return \Yii::$app->security->validatePassword($password, $this->password_hash);
     }
-    
+
     /**
      * Generates password hash from password and sets it to the model
      *
@@ -53,7 +54,7 @@ trait AuthenticationModelTrait
     {
         $this->password_hash = \Yii::$app->security->generatePasswordHash($password);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -61,7 +62,7 @@ trait AuthenticationModelTrait
     {
         throw new NotSupportedException('"findByAccessToken" is not supported.');
     }
-    
+
     /**
      * Finds user by password reset token
      *
@@ -73,13 +74,12 @@ trait AuthenticationModelTrait
         if (!static::isPasswordResetTokenValid($token)) {
             return null;
         }
-        
         return static::findOne([
             'password_reset_token' => $token,
             'status' => static::STATUS_ACTIVE,
         ]);
     }
-    
+
     /**
      * Finds out if password reset token is valid
      *
@@ -91,12 +91,11 @@ trait AuthenticationModelTrait
         if (empty($token)) {
             return false;
         }
-        
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
+        $timestamp = (int)substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
     }
-    
+
     /**
      * Finds user by account confirmation token
      *
@@ -126,7 +125,7 @@ trait AuthenticationModelTrait
     {
         return true; //return $this->getAuthKey() === $authKey;
     }
-    
+
     /**
      * Generates "remember me" authentication key
      */
@@ -134,7 +133,7 @@ trait AuthenticationModelTrait
     {
         //$this->auth_key = Yii::$app->security->generateRandomString();
     }
-    
+
     /**
      * Generates new password reset token
      */
@@ -142,7 +141,7 @@ trait AuthenticationModelTrait
     {
         $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
     }
-    
+
     /**
      * Removes password reset token
      */
@@ -150,7 +149,7 @@ trait AuthenticationModelTrait
     {
         $this->password_reset_token = null;
     }
-    
+
     /**
      * Generates new account confirmation token
      */
@@ -158,7 +157,7 @@ trait AuthenticationModelTrait
     {
         $this->account_confirm_token = Yii::$app->security->generateRandomString();
     }
-    
+
     /**
      * Removes account confirmation token
      */
